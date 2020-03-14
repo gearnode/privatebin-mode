@@ -18,8 +18,22 @@
 ;; ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 ;; IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+(defun privatebin-mode/get-data ()
+  (if (use-region-p)
+      (buffer-substring-no-properties (region-beginning) (region-end))
+    (buffer-substring-no-properties (point-min) (point-max))))
+
+(defun privatebin-mode/exec ())
+
+(defun privatebin-mode/create-paste ()
+  "todo"
+  (interactive)
+  (message "region not active"))
+
 (define-minor-mode privatebin-mode
   "Convert emacs buffer in privatebin paste"
-  :link '(url-link :tag "Github" "https://github.com/gearnode/privatebin-mode")
-  :group 'external
-  :global t)
+  :lighter " privatebin"
+  :global t
+  :keymap (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "C-c C-p") 'privatebin-mode/create-paste)
+            map))
